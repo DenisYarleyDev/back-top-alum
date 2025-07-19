@@ -439,11 +439,11 @@ app.get('/api/itens-orcamento/:orcamentoId', async (req, res) => {
 });
 
 app.post('/api/itens-orcamento', async (req, res) => {
-  const { orcamentoFK, produtoFK, largura, altura, area, quantidade } = req.body;
+  const { orcamentoFK, produtoFK, largura, altura, area, quantidade, transpasso } = req.body;
   try {
     const { data, error } = await supabase
       .from('itensOrcamento')
-      .insert([{ orcamentoFK, produtoFK, largura, altura, area, quantidade }])
+      .insert([{ orcamentoFK, produtoFK, largura, altura, area, quantidade, transpasso }])
       .select();
     
     if (error) {
@@ -457,11 +457,11 @@ app.post('/api/itens-orcamento', async (req, res) => {
 
 app.put('/api/itens-orcamento/:id', async (req, res) => {
   const { id } = req.params;
-  const { orcamentoFK, produtoFK, largura, altura, area, quantidade } = req.body;
+  const { orcamentoFK, produtoFK, largura, altura, area, quantidade, transpasso } = req.body;
   try {
     const { data, error } = await supabase
       .from('itensOrcamento')
-      .update({ orcamentoFK, produtoFK, largura, altura, area, quantidade })
+      .update({ orcamentoFK, produtoFK, largura, altura, area, quantidade, transpasso })
       .eq('id', id)
       .select();
     
