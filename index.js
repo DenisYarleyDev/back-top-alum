@@ -357,36 +357,30 @@ app.get('/api/orcamentos', async (req, res) => {
   }
 });
 
-app.post('/api/itens-orcamento', async (req, res) => {
-  const { orcamentoFK, produtoFK, largura, altura, area, quantidade, transpasso } = req.body;
+app.post('/api/orcamentos', async (req, res) => {
+  const { clienteFK, vendedorFK, totalOrcamento, parcelas, desconto } = req.body;
   try {
     const { data, error } = await supabase
-      .from('itensOrcamento')
-      .insert([{ orcamentoFK, produtoFK, largura, altura, area, quantidade, transpasso }])
+      .from('orcamentos')
+      .insert([{ clienteFK, vendedorFK, totalOrcamento, parcelas, desconto }])
       .select();
-    
-    if (error) {
-      return res.status(500).json({ error: error.message });
-    }
+    if (error) return res.status(500).json({ error: error.message });
     res.status(201).json(data[0]);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-app.put('/api/itens-orcamento/:id', async (req, res) => {
+app.put('/api/orcamentos/:id', async (req, res) => {
   const { id } = req.params;
-  const { orcamentoFK, produtoFK, largura, altura, area, quantidade, transpasso } = req.body;
+  const { clienteFK, vendedorFK, totalOrcamento, parcelas, desconto } = req.body;
   try {
     const { data, error } = await supabase
-      .from('itensOrcamento')
-      .update({ orcamentoFK, produtoFK, largura, altura, area, quantidade, transpasso })
+      .from('orcamentos')
+      .update({ clienteFK, vendedorFK, totalOrcamento, parcelas, desconto })
       .eq('id', id)
       .select();
-    
-    if (error) {
-      return res.status(500).json({ error: error.message });
-    }
+    if (error) return res.status(500).json({ error: error.message });
     res.json(data[0]);
   } catch (err) {
     res.status(500).json({ error: err.message });
